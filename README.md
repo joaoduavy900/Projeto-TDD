@@ -4,8 +4,8 @@ Esse projeto foi criado para desenvolver dois sistemas aplicando a metodologia Ã
 
 Dois sistemas foram desenvolvidos:
 
-- [Processador de compras](github.com/joaoduavy900/Projeto-TDD)
-- [Sistema de ingressos](github.com/joaoduavy900/Projeto-TDD)
+- [Processador de compras](https://github.com/joaoduavy900/Projeto-TDD/blob/main/compra/README.md)
+- [Sistema de ingressos](https://github.com/joaoduavy900/Projeto-TDD/blob/main/ingresso/README.md)
 
 ## Autores
 
