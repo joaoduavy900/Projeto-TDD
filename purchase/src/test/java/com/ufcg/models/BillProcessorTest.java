@@ -1,17 +1,16 @@
 package com.ufcg.models;
 
-import org.junit.Assert.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-public class BillProcessor extends TestCase
+public class BillProcessorTest extends TestCase
 {
-    public BillProcessor(String testName) {
+    public BillProcessorTest(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return new TestSuite(BillProcessor.class);
+        return new TestSuite(BillProcessorTest.class);
     }
 }
