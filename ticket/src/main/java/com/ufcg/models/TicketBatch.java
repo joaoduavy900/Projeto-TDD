@@ -8,10 +8,10 @@ import com.ufcg.exceptions.EmptyTicketListException;
 import com.ufcg.exceptions.HalfPriceTicketsOverLimitException;
 import com.ufcg.exceptions.HalfPriceTicketsUnderLimitException;
 import com.ufcg.exceptions.InvalidTicketIdException;
+import com.ufcg.exceptions.NoAvailableTicketException;
 import com.ufcg.exceptions.VipTicketsOverLimitException;
 import com.ufcg.exceptions.VipTicketsUnderLimitException;
 import java.util.HashMap;
-import java.util.NoSuchElementException;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -89,6 +89,7 @@ public class TicketBatch {
       return t;
     }
 
-    throw new NoSuchElementException("There are no " + ticketType.name() + " tickets available.");
+    throw new NoAvailableTicketException(
+        "There are no " + ticketType.name() + " tickets available.");
   }
 }

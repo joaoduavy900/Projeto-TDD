@@ -8,10 +8,10 @@ import com.ufcg.exceptions.EmptyTicketListException;
 import com.ufcg.exceptions.HalfPriceTicketsOverLimitException;
 import com.ufcg.exceptions.HalfPriceTicketsUnderLimitException;
 import com.ufcg.exceptions.InvalidTicketIdException;
+import com.ufcg.exceptions.NoAvailableTicketException;
 import com.ufcg.exceptions.VipTicketsOverLimitException;
 import com.ufcg.exceptions.VipTicketsUnderLimitException;
 import java.util.HashMap;
-import java.util.NoSuchElementException;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -254,7 +254,7 @@ public class TicketBatchTest extends TestCase {
       ticket = batch.buyTicket(ticketType);
 
       fail();
-    } catch (NoSuchElementException e) {
+    } catch (NoAvailableTicketException e) {
     } catch (Exception e) {
       fail();
     }
@@ -296,7 +296,7 @@ public class TicketBatchTest extends TestCase {
       ticket = batch.buyTicket(ticketType);
 
       fail();
-    } catch (NoSuchElementException e) {
+    } catch (NoAvailableTicketException e) {
     } catch (Exception e) {
       fail();
     }
@@ -338,7 +338,7 @@ public class TicketBatchTest extends TestCase {
       ticket = batch.buyTicket(ticketType);
 
       fail();
-    } catch (NoSuchElementException e) {
+    } catch (NoAvailableTicketException e) {
     } catch (Exception e) {
       fail();
     }
