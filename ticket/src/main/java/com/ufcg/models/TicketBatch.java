@@ -2,11 +2,12 @@ package com.ufcg.models;
 
 import com.ufcg.enums.TicketStatus;
 import com.ufcg.enums.TicketType;
+import com.ufcg.exceptions.DiscountOverLimitException;
+import com.ufcg.exceptions.DiscountUnderLimitException;
 import com.ufcg.exceptions.DuplicateTicketException;
 import com.ufcg.exceptions.EmptyTicketListException;
 import com.ufcg.exceptions.HalfPriceTicketsOverLimitException;
 import com.ufcg.exceptions.HalfPriceTicketsUnderLimitException;
-import com.ufcg.exceptions.InvalidTicketBatchDiscountException;
 import com.ufcg.exceptions.InvalidTicketIdException;
 import com.ufcg.exceptions.VipTicketsOverLimitException;
 import com.ufcg.exceptions.VipTicketsUnderLimitException;
@@ -63,7 +64,11 @@ public class TicketBatch {
     }
 
     if (discount < 0) {
-      throw new InvalidTicketBatchDiscountException("TicketBatch discount must be non-negative.");
+      throw new DiscountUnderLimitException("TicketBatch discount must be non-negative.");
+    }
+
+    if (discount > 25) {
+      throw new DiscountOverLimitException("TicketBatch discount must be non-negative.");
     }
 
     this.id = id;

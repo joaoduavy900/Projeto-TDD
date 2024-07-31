@@ -6,6 +6,7 @@ import com.ufcg.exceptions.DuplicateTicketException;
 import com.ufcg.exceptions.EmptyTicketListException;
 import com.ufcg.exceptions.HalfPriceTicketsOverLimitException;
 import com.ufcg.exceptions.HalfPriceTicketsUnderLimitException;
+import com.ufcg.exceptions.InvalidTicketIdException;
 import com.ufcg.exceptions.VipTicketsOverLimitException;
 import com.ufcg.exceptions.VipTicketsUnderLimitException;
 import java.util.ArrayList;
@@ -50,6 +51,53 @@ public class TicketBatchTest extends TestCase {
     assertTrue(batch.getId() == id);
     assertTrue(batch.getTickets().equals(tickets));
     assertTrue(batch.getDiscount() == discount);
+  }
+
+  /** Test constructor negative id */
+  public void testConstructorNegativeId() {
+    int id = -1;
+    int discount = 10;
+    ArrayList<Ticket> tickets = this.tickets;
+
+    try {
+      TicketBatch _ = new TicketBatch(id, tickets, discount);
+
+      fail();
+    } catch (InvalidTicketIdException e) {
+    } catch (Exception e) {
+      fail();
+    }
+  }
+
+  /** Test constructor zero id */
+  public void testConstructorZeroId() {
+    int id = 0;
+    int discount = 10;
+    ArrayList<Ticket> tickets = this.tickets;
+
+    try {
+      TicketBatch _ = new TicketBatch(id, tickets, discount);
+
+      fail();
+    } catch (InvalidTicketIdException e) {
+    } catch (Exception e) {
+      fail();
+    }
+  }
+
+  /** Test constructor discount under limit */
+  public void testConstructorDiscountUnderLimit() {
+    fail();
+  }
+
+  /** Test constructor discount over limit */
+  public void testConstructorDiscountOverLimit() {
+    fail();
+  }
+
+  /** Test constructor null tickets */
+  public void testConstructorNullTickets() {
+    fail();
   }
 
   /** Test constructor empty tickets */
