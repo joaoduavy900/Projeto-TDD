@@ -1,5 +1,6 @@
 package com.ufcg.util;
 
+import com.ufcg.models.Bill;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -57,5 +58,17 @@ public class Date {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o == null) return false;
+
+        if (o.getClass() != Date.class) return false;
+
+        Date date = (Date) o;
+
+        return date.year == this.year && date.month == this.month && date.day == this.day;
     }
 }

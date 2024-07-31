@@ -19,7 +19,7 @@ public class Payment
     Date date;
 
     @Getter
-    @Setter(AccessLevel.PROTECTED)
+    @Setter
     PaymentMethod paymentMethod;
 
     public Payment(double totalValue, Date date, PaymentMethod paymentMethod)
