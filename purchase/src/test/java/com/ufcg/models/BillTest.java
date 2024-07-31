@@ -53,7 +53,7 @@ public class BillTest extends TestCase
         double total = 100.0;
         Bill bill = new Bill(validDate, total, validAccountCode);
 
-        assertEquals(100.0, bill.totalValue);
+        assertEquals(total, bill.totalValue);
         assertEquals(validDate, bill.getDate());
         assertEquals(validAccountCode, bill.getAccountCode());
     }
@@ -88,7 +88,7 @@ public class BillTest extends TestCase
         double total = 1_000_000_000.0;
         Bill bill = new Bill(validDate, total, validAccountCode);
 
-        assertEquals(1_000_000_000.0, bill.totalValue);
+        assertEquals(total, bill.totalValue);
         assertEquals(validDate, bill.getDate());
         assertEquals(validAccountCode, bill.getAccountCode());
     }
@@ -99,7 +99,7 @@ public class BillTest extends TestCase
         double total = 0.01;
         Bill bill = new Bill(validDate, total, validAccountCode);
 
-        assertEquals(0.01, bill.totalValue);
+        assertEquals(total, bill.totalValue);
         assertEquals(validDate, bill.getDate());
         assertEquals(validAccountCode, bill.getAccountCode());
     }

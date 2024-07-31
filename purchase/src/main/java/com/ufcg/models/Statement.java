@@ -8,8 +8,11 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Statement
-{
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+public class Statement {
+
     @Getter
     UUID id = UUID.randomUUID();
 
@@ -26,16 +29,26 @@ public class Statement
     @Setter
     StatementStatus status;
 
-    public Statement(Date date, Double totalValue, String clientName, StatementStatus status)
-    {
+    private static final Pattern NAME_PATTERN = Pattern.compile("^[A-Za-z\\s]{2,50}$");
+
+    public Statement(Date date, Double totalValue, String clientName) {
         if (totalValue <= 0) {
             throw new IllegalArgumentException("Total value must be greater than zero.");
+        }
+
+        if (clientName == null || !isValidClientName(clientName)) {
+            throw new IllegalArgumentException("Invalid client name. It must be between 2 and 50 characters long and contain only letters and spaces.");
         }
 
         this.date = date;
         this.totalValue = totalValue;
         this.clientName = clientName;
-        this.status = status;
+        this.status = StatementStatus.UNDEFINED;
+    }
+
+    private boolean isValidClientName(String clientName) {
+        Matcher matcher = NAME_PATTERN.matcher(clientName);
+        return matcher.matches();
     }
 
     @Override

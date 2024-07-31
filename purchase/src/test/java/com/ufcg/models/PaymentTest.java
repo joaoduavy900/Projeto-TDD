@@ -49,7 +49,7 @@ public class PaymentTest extends TestCase
         double total = 100.0;
         Payment payment = new Payment(total, validDate, validPaymentMethod);
 
-        assertEquals(100.0, payment.totalValue);
+        assertEquals(total, payment.totalValue);
         assertEquals(validDate, payment.getDate());
         assertEquals(validTotalValue, payment.paymentMethod);
     }
@@ -84,7 +84,7 @@ public class PaymentTest extends TestCase
         double total = 1_000_000_000.0;
         Payment payment = new Payment(total, validDate, validPaymentMethod);
 
-        assertEquals(1_000_000_000.0, payment.totalValue);
+        assertEquals(total, payment.totalValue);
         assertEquals(validDate, payment.getDate());
         assertEquals(validPaymentMethod, payment.paymentMethod);
     }
@@ -95,7 +95,7 @@ public class PaymentTest extends TestCase
         double total = 0.01;
         Payment payment = new Payment(total, validDate, validPaymentMethod);
 
-        assertEquals(0.01, payment.totalValue);
+        assertEquals(total, payment.totalValue);
         assertEquals(validDate, payment.getDate());
         assertEquals(validPaymentMethod, payment.paymentMethod);
     }
