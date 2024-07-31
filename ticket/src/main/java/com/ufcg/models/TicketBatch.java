@@ -92,4 +92,8 @@ public class TicketBatch {
     throw new NoAvailableTicketException(
         "There are no " + ticketType.name() + " tickets available.");
   }
+
+  public boolean contains(Ticket t) {
+    return tickets.containsKey(t.getId());
+  }
 }
