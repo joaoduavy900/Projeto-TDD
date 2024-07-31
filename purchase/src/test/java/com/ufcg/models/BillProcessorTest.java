@@ -20,7 +20,6 @@ public class BillProcessorTest extends TestCase {
     private Date futureDate;
     private Date pastDate;
     private Bill bill;
-    private Bill bill2;
     private List<Bill> bills;
 
     public BillProcessorTest(String testName) {
@@ -37,7 +36,6 @@ public class BillProcessorTest extends TestCase {
         futureDate = new Date(2023, 3, 1);
         pastDate = new Date(2023, 1, 15);
         bill = new Bill(validDate, 1500.0, "12345678901234567890123456789012345678901234");
-        bill2 = new Bill(validDate, 800.0, "12345678901234567890123456789012345678901234");
         bills = Arrays.asList(
                 new Bill(validDate, 500.0, "12345678901234567890123456789012345678901234"),
                 new Bill(validDate, 400.0, "12345678901234567890123456789012345678901234"),
