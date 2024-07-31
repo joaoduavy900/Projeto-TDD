@@ -2,6 +2,8 @@ package com.ufcg.models;
 
 import com.ufcg.enums.TicketStatus;
 import com.ufcg.enums.TicketType;
+import com.ufcg.exceptions.DiscountOverLimitException;
+import com.ufcg.exceptions.DiscountUnderLimitException;
 import com.ufcg.exceptions.DuplicateTicketException;
 import com.ufcg.exceptions.EmptyTicketListException;
 import com.ufcg.exceptions.HalfPriceTicketsOverLimitException;
@@ -87,17 +89,50 @@ public class TicketBatchTest extends TestCase {
 
   /** Test constructor discount under limit */
   public void testConstructorDiscountUnderLimit() {
-    fail();
+    int id = 1;
+    int discount = -1;
+    ArrayList<Ticket> tickets = this.tickets;
+
+    try {
+      TicketBatch _ = new TicketBatch(id, tickets, discount);
+
+      fail();
+    } catch (DiscountUnderLimitException e) {
+    } catch (Exception e) {
+      fail();
+    }
   }
 
   /** Test constructor discount over limit */
   public void testConstructorDiscountOverLimit() {
-    fail();
+    int id = 1;
+    int discount = 26;
+    ArrayList<Ticket> tickets = this.tickets;
+
+    try {
+      TicketBatch _ = new TicketBatch(id, tickets, discount);
+
+      fail();
+    } catch (DiscountOverLimitException e) {
+    } catch (Exception e) {
+      fail();
+    }
   }
 
   /** Test constructor null tickets */
   public void testConstructorNullTickets() {
-    fail();
+    int id = 1;
+    int discount = 20;
+    ArrayList<Ticket> tickets = null;
+
+    try {
+      TicketBatch _ = new TicketBatch(id, tickets, discount);
+
+      fail();
+    } catch (NullPointerException e) {
+    } catch (Exception e) {
+      fail();
+    }
   }
 
   /** Test constructor empty tickets */
