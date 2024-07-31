@@ -4,25 +4,23 @@ import com.ufcg.enums.TicketStatus;
 import com.ufcg.enums.TicketType;
 import com.ufcg.exceptions.DiscountOverLimitException;
 import com.ufcg.exceptions.DiscountUnderLimitException;
-import com.ufcg.exceptions.DuplicateTicketException;
 import com.ufcg.exceptions.EmptyTicketListException;
 import com.ufcg.exceptions.HalfPriceTicketsOverLimitException;
 import com.ufcg.exceptions.HalfPriceTicketsUnderLimitException;
 import com.ufcg.exceptions.InvalidTicketIdException;
 import com.ufcg.exceptions.VipTicketsOverLimitException;
 import com.ufcg.exceptions.VipTicketsUnderLimitException;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 import lombok.Getter;
 import lombok.NonNull;
 
 public class TicketBatch {
   @Getter private int id;
-  @Getter private ArrayList<Ticket> tickets;
+  @Getter private HashMap<Integer, Ticket> tickets;
   @Getter private float discount;
 
-  public TicketBatch(int id, @NonNull ArrayList<Ticket> tickets, float discount) {
+  public TicketBatch(int id, @NonNull HashMap<Integer, Ticket> tickets, float discount) {
     if (id <= 0) {
       throw new InvalidTicketIdException("TicketBatch id must be positive.");
     }
@@ -32,15 +30,9 @@ public class TicketBatch {
     }
 
     int cntVip = 0, cntHalfPrice = 0, total = tickets.size();
-    for (Ticket t : tickets) {
+    for (Ticket t : tickets.values()) {
       if (t.getType() == TicketType.VIP) cntVip++;
       if (t.getType() == TicketType.HALF_PRICE) cntHalfPrice++;
-
-      int freq = Collections.frequency(tickets, t);
-
-      if (freq != 1) {
-        throw new DuplicateTicketException("Each ticket must be unique in a TicketBatch.");
-      }
     }
 
     if (cntVip * 10 < total * 2) {
@@ -76,20 +68,20 @@ public class TicketBatch {
     this.discount = discount;
   }
 
-  public ArrayList<Ticket> getSoldTickets() {
-    ArrayList<Ticket> soldTickets = new ArrayList<Ticket>();
+  public HashMap<Integer, Ticket> getSoldTickets() {
+    HashMap<Integer, Ticket> soldTickets = new HashMap<Integer, Ticket>();
 
-    for (Ticket t : tickets) {
+    for (Ticket t : tickets.values()) {
       if (t.getStatus() != TicketStatus.SOLD) continue;
 
-      soldTickets.add(t);
+      soldTickets.put(t.getId(), t);
     }
 
     return soldTickets;
   }
 
   public Ticket buyTicket(TicketType ticketType) {
-    for (Ticket t : tickets) {
+    for (Ticket t : tickets.values()) {
       if (t.getType() != ticketType) continue;
       if (t.getStatus() == TicketStatus.SOLD) continue;
 

@@ -4,14 +4,13 @@ import com.ufcg.enums.TicketStatus;
 import com.ufcg.enums.TicketType;
 import com.ufcg.exceptions.DiscountOverLimitException;
 import com.ufcg.exceptions.DiscountUnderLimitException;
-import com.ufcg.exceptions.DuplicateTicketException;
 import com.ufcg.exceptions.EmptyTicketListException;
 import com.ufcg.exceptions.HalfPriceTicketsOverLimitException;
 import com.ufcg.exceptions.HalfPriceTicketsUnderLimitException;
 import com.ufcg.exceptions.InvalidTicketIdException;
 import com.ufcg.exceptions.VipTicketsOverLimitException;
 import com.ufcg.exceptions.VipTicketsUnderLimitException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -19,23 +18,23 @@ import junit.framework.TestSuite;
 
 public class TicketBatchTest extends TestCase {
 
-  private ArrayList<Ticket> tickets;
+  private HashMap<Integer, Ticket> tickets;
 
   public TicketBatchTest(String testName) {
     super(testName);
 
-    tickets = new ArrayList<Ticket>();
+    tickets = new HashMap<Integer, Ticket>();
 
-    tickets.add(new Ticket(1, TicketType.VIP, TicketStatus.AVAILABLE));
-    tickets.add(new Ticket(2, TicketType.VIP, TicketStatus.AVAILABLE));
-    tickets.add(new Ticket(3, TicketType.VIP, TicketStatus.AVAILABLE));
-    tickets.add(new Ticket(4, TicketType.NORMAL, TicketStatus.AVAILABLE));
-    tickets.add(new Ticket(5, TicketType.NORMAL, TicketStatus.AVAILABLE));
-    tickets.add(new Ticket(6, TicketType.NORMAL, TicketStatus.AVAILABLE));
-    tickets.add(new Ticket(7, TicketType.NORMAL, TicketStatus.AVAILABLE));
-    tickets.add(new Ticket(8, TicketType.NORMAL, TicketStatus.AVAILABLE));
-    tickets.add(new Ticket(9, TicketType.NORMAL, TicketStatus.AVAILABLE));
-    tickets.add(new Ticket(10, TicketType.HALF_PRICE, TicketStatus.AVAILABLE));
+    tickets.put(1, new Ticket(1, TicketType.VIP, TicketStatus.AVAILABLE));
+    tickets.put(2, new Ticket(2, TicketType.VIP, TicketStatus.AVAILABLE));
+    tickets.put(3, new Ticket(3, TicketType.VIP, TicketStatus.AVAILABLE));
+    tickets.put(4, new Ticket(4, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(5, new Ticket(5, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(6, new Ticket(6, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(7, new Ticket(7, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(8, new Ticket(8, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(9, new Ticket(9, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(10, new Ticket(10, TicketType.HALF_PRICE, TicketStatus.AVAILABLE));
   }
 
   public static Test suite() {
@@ -46,7 +45,7 @@ public class TicketBatchTest extends TestCase {
   public void testConstructor() {
     int id = 1;
     int discount = 10;
-    ArrayList<Ticket> tickets = this.tickets;
+    HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch batch = new TicketBatch(id, tickets, discount);
 
@@ -59,7 +58,7 @@ public class TicketBatchTest extends TestCase {
   public void testConstructorNegativeId() {
     int id = -1;
     int discount = 10;
-    ArrayList<Ticket> tickets = this.tickets;
+    HashMap<Integer, Ticket> tickets = this.tickets;
 
     try {
       TicketBatch _ = new TicketBatch(id, tickets, discount);
@@ -75,7 +74,7 @@ public class TicketBatchTest extends TestCase {
   public void testConstructorZeroId() {
     int id = 0;
     int discount = 10;
-    ArrayList<Ticket> tickets = this.tickets;
+    HashMap<Integer, Ticket> tickets = this.tickets;
 
     try {
       TicketBatch _ = new TicketBatch(id, tickets, discount);
@@ -91,7 +90,7 @@ public class TicketBatchTest extends TestCase {
   public void testConstructorDiscountUnderLimit() {
     int id = 1;
     int discount = -1;
-    ArrayList<Ticket> tickets = this.tickets;
+    HashMap<Integer, Ticket> tickets = this.tickets;
 
     try {
       TicketBatch _ = new TicketBatch(id, tickets, discount);
@@ -107,7 +106,7 @@ public class TicketBatchTest extends TestCase {
   public void testConstructorDiscountOverLimit() {
     int id = 1;
     int discount = 26;
-    ArrayList<Ticket> tickets = this.tickets;
+    HashMap<Integer, Ticket> tickets = this.tickets;
 
     try {
       TicketBatch _ = new TicketBatch(id, tickets, discount);
@@ -123,7 +122,7 @@ public class TicketBatchTest extends TestCase {
   public void testConstructorNullTickets() {
     int id = 1;
     int discount = 20;
-    ArrayList<Ticket> tickets = null;
+    HashMap<Integer, Ticket> tickets = null;
 
     try {
       TicketBatch _ = new TicketBatch(id, tickets, discount);
@@ -139,7 +138,7 @@ public class TicketBatchTest extends TestCase {
   public void testConstructorEmptyTickets() {
     int id = 1;
     int discount = 10;
-    ArrayList<Ticket> empty = new ArrayList<Ticket>();
+    HashMap<Integer, Ticket> empty = new HashMap<Integer, Ticket>();
 
     try {
       TicketBatch _ = new TicketBatch(id, empty, discount);
@@ -154,9 +153,9 @@ public class TicketBatchTest extends TestCase {
   public void testConstructorVipTicketsOverLimit() {
     int id = 1;
     int discount = 10;
-    ArrayList<Ticket> tickets = this.tickets;
+    HashMap<Integer, Ticket> tickets = this.tickets;
 
-    tickets.set(3, new Ticket(16, TicketType.VIP, TicketStatus.AVAILABLE));
+    tickets.put(4, new Ticket(4, TicketType.VIP, TicketStatus.AVAILABLE));
 
     try {
       TicketBatch _ = new TicketBatch(id, tickets, discount);
@@ -171,10 +170,10 @@ public class TicketBatchTest extends TestCase {
   public void testConstructorVipTicketsUnderLimit() {
     int id = 1;
     int discount = 10;
-    ArrayList<Ticket> tickets = this.tickets;
+    HashMap<Integer, Ticket> tickets = this.tickets;
 
-    tickets.set(2, new Ticket(16, TicketType.NORMAL, TicketStatus.AVAILABLE));
-    tickets.set(1, new Ticket(17, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(3, new Ticket(3, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(2, new Ticket(2, TicketType.NORMAL, TicketStatus.AVAILABLE));
 
     try {
       TicketBatch _ = new TicketBatch(id, tickets, discount);
@@ -189,9 +188,9 @@ public class TicketBatchTest extends TestCase {
   public void testConstructorHalfPriceTicketsUnderLimit() {
     int id = 1;
     int discount = 10;
-    ArrayList<Ticket> tickets = this.tickets;
+    HashMap<Integer, Ticket> tickets = this.tickets;
 
-    tickets.set(9, new Ticket(16, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(10, new Ticket(10, TicketType.NORMAL, TicketStatus.AVAILABLE));
 
     try {
       TicketBatch _ = new TicketBatch(id, tickets, discount);
@@ -206,9 +205,9 @@ public class TicketBatchTest extends TestCase {
   public void testConstructorHalfPriceTicketsOverLimit() {
     int id = 1;
     int discount = 10;
-    ArrayList<Ticket> tickets = this.tickets;
+    HashMap<Integer, Ticket> tickets = this.tickets;
 
-    tickets.set(8, new Ticket(16, TicketType.HALF_PRICE, TicketStatus.AVAILABLE));
+    tickets.put(9, new Ticket(9, TicketType.HALF_PRICE, TicketStatus.AVAILABLE));
 
     try {
       TicketBatch _ = new TicketBatch(id, tickets, discount);
@@ -219,35 +218,18 @@ public class TicketBatchTest extends TestCase {
     }
   }
 
-  /** Test constructor two equals tickets */
-  public void testConstructorTwoEqualsTickets() {
-    int id = 1;
-    int discount = 10;
-    ArrayList<Ticket> tickets = this.tickets;
-
-    tickets.set(1, new Ticket(1, TicketType.VIP, TicketStatus.AVAILABLE));
-
-    try {
-      TicketBatch _ = new TicketBatch(id, tickets, discount);
-      fail();
-    } catch (DuplicateTicketException e) {
-    } catch (Exception e) {
-      fail();
-    }
-  }
-
   /** Test buy vip ticket */
   public void testButVipTicket() {
     int id = 1;
     int discount = 10;
-    ArrayList<Ticket> tickets = this.tickets;
+    HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch batch = new TicketBatch(id, tickets, discount);
-    ArrayList<Ticket> soldTickets = new ArrayList<Ticket>();
+    HashMap<Integer, Ticket> soldTickets = new HashMap<Integer, Ticket>();
     TicketType ticketType = TicketType.VIP;
 
     Ticket ticket = batch.buyTicket(ticketType);
-    soldTickets.add(ticket);
+    soldTickets.put(ticket.getId(), ticket);
 
     assertTrue(ticket.getType() == ticketType);
     assertTrue(ticket.getStatus() == TicketStatus.SOLD);
@@ -258,16 +240,14 @@ public class TicketBatchTest extends TestCase {
   public void testButUnavailableVipTicket() {
     int id = 1;
     int discount = 10;
-    ArrayList<Ticket> tickets = this.tickets;
+    HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch batch = new TicketBatch(id, tickets, discount);
-    ArrayList<Ticket> soldTickets = new ArrayList<Ticket>();
     TicketType ticketType = TicketType.VIP;
     Ticket ticket;
 
     for (int i = 0; i < 3; i++) {
       ticket = batch.buyTicket(ticketType);
-      soldTickets.add(ticket);
     }
 
     try {
@@ -284,14 +264,14 @@ public class TicketBatchTest extends TestCase {
   public void testBuyNormalTicket() {
     int id = 1;
     int discount = 10;
-    ArrayList<Ticket> tickets = this.tickets;
+    HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch batch = new TicketBatch(id, tickets, discount);
-    ArrayList<Ticket> soldTickets = new ArrayList<Ticket>();
+    HashMap<Integer, Ticket> soldTickets = new HashMap<Integer, Ticket>();
     TicketType ticketType = TicketType.NORMAL;
 
     Ticket ticket = batch.buyTicket(ticketType);
-    soldTickets.add(ticket);
+    soldTickets.put(ticket.getId(), ticket);
 
     assertTrue(ticket.getType() == ticketType);
     assertTrue(ticket.getStatus() == TicketStatus.SOLD);
@@ -302,16 +282,14 @@ public class TicketBatchTest extends TestCase {
   public void testBuyUnavailableNormalTicket() {
     int id = 1;
     int discount = 10;
-    ArrayList<Ticket> tickets = this.tickets;
+    HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch batch = new TicketBatch(id, tickets, discount);
-    ArrayList<Ticket> soldTickets = new ArrayList<Ticket>();
     TicketType ticketType = TicketType.NORMAL;
     Ticket ticket;
 
     for (int i = 0; i < 6; i++) {
       ticket = batch.buyTicket(ticketType);
-      soldTickets.add(ticket);
     }
 
     try {
@@ -328,14 +306,14 @@ public class TicketBatchTest extends TestCase {
   public void testBuyHalfPriceTicket() {
     int id = 1;
     int discount = 10;
-    ArrayList<Ticket> tickets = this.tickets;
+    HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch batch = new TicketBatch(id, tickets, discount);
-    ArrayList<Ticket> soldTickets = new ArrayList<Ticket>();
+    HashMap<Integer, Ticket> soldTickets = new HashMap<Integer, Ticket>();
     TicketType ticketType = TicketType.HALF_PRICE;
 
     Ticket ticket = batch.buyTicket(ticketType);
-    soldTickets.add(ticket);
+    soldTickets.put(ticket.getId(), ticket);
 
     assertTrue(ticket.getType() == ticketType);
     assertTrue(ticket.getStatus() == TicketStatus.SOLD);
@@ -346,16 +324,14 @@ public class TicketBatchTest extends TestCase {
   public void testBuyUnavailableHalfPriceTicket() {
     int id = 1;
     int discount = 10;
-    ArrayList<Ticket> tickets = this.tickets;
+    HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch batch = new TicketBatch(id, tickets, discount);
-    ArrayList<Ticket> soldTickets = new ArrayList<Ticket>();
     TicketType ticketType = TicketType.HALF_PRICE;
     Ticket ticket;
 
     for (int i = 0; i < 1; i++) {
       ticket = batch.buyTicket(ticketType);
-      soldTickets.add(ticket);
     }
 
     try {
@@ -372,24 +348,24 @@ public class TicketBatchTest extends TestCase {
   public void testGetSoldTickets() {
     int id = 1;
     int discount = 10;
-    ArrayList<Ticket> tickets = this.tickets;
+    HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch batch = new TicketBatch(id, tickets, discount);
 
     assertTrue(batch.getSoldTickets().isEmpty());
 
-    ArrayList<Ticket> soldTickets = new ArrayList<Ticket>();
+    HashMap<Integer, Ticket> soldTickets = new HashMap<Integer, Ticket>();
 
     Ticket ticket = batch.buyTicket(TicketType.VIP);
-    soldTickets.add(ticket);
+    soldTickets.put(ticket.getId(), ticket);
     assertEquals(batch.getSoldTickets(), soldTickets);
 
     ticket = batch.buyTicket(TicketType.NORMAL);
-    soldTickets.add(ticket);
+    soldTickets.put(ticket.getId(), ticket);
     assertEquals(batch.getSoldTickets(), soldTickets);
 
     ticket = batch.buyTicket(TicketType.HALF_PRICE);
-    soldTickets.add(ticket);
+    soldTickets.put(ticket.getId(), ticket);
     assertEquals(batch.getSoldTickets(), soldTickets);
   }
 }
