@@ -1,24 +1,21 @@
 package com.ufcg;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import com.ufcg.models.Statement;
 import com.ufcg.models.Bill;
 import com.ufcg.models.Payment;
-
+import com.ufcg.models.Statement;
 import com.ufcg.enums.StatementStatus;
 import com.ufcg.enums.PaymentMethod;
-
 import com.ufcg.util.Date;
 
 public class BillProcessor {
 
-    public static Statement processBill(Bill bill, List<Bill> bills, String clientName, PaymentMethod paymentMethod) {
+    public static Statement processBill(Bill bill, List<Bill> bills, String clientName) {
         double totalPayments = 0.0;
 
         for (Bill b : bills) {
-            Payment payment = new Payment(bill.getTotalValue(), bill.getDate(), paymentMethod);
+            PaymentMethod method = determinePaymentMethod(b);
+            Payment payment = new Payment(b.getTotalValue(), b.getDate(), method);
 
             if (!isPaymentDateValid(payment, bill.getDate())) {
                 continue;
@@ -32,12 +29,18 @@ public class BillProcessor {
         return new Statement(bill.getDate(), bill.getTotalValue(), clientName, status);
     }
 
+    private static PaymentMethod determinePaymentMethod(Bill bill) {
+        if (bill.getTotalValue() > 1000) {
+            return PaymentMethod.BANK_TRANSFER;
+        } else {
+            return PaymentMethod.BANK_SLIP;
+        }
+    }
 
     private static boolean isPaymentDateValid(Payment payment, Date billDate) {
         if (payment.getPaymentMethod() == PaymentMethod.CREDIT_CARD) {
             return payment.getDate().isBefore(billDate.minusDays(15));
         }
-
         return !payment.getDate().isAfter(billDate);
     }
 
