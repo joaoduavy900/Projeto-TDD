@@ -9,4 +9,11 @@ public class Payment {
     Date date;
     
     PaymentMethod paymentMethod;
+
+    public Payment(float totalValue, Date date, PaymentMethod paymentMethod)
+    {
+        this.totalValue = totalValue;
+        this.date = date;
+        this.paymentMethod = paymentMethod;
+    }
 }
