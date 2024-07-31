@@ -141,4 +141,78 @@ public class PaymentTest extends TestCase
             assertEquals("Payment method cannot be null.", e.getMessage());
         }
     }
+
+    /** Test constructor with totalValue just below minimum and paymentMethod BANK_SLIP */
+    public void testConstructorTotalValueBelowMinimumBankSlip() {
+        double totalValue = 0.005;
+        PaymentMethod method = PaymentMethod.BANK_SLIP;
+
+        try {
+            Payment payment = new Payment(totalValue, validDate, method);
+            fail("Expected IllegalArgumentException for total value below minimum with BANK_SLIP.");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Total value must be between R$0.01 and R$5000.0 if payment method is bank slip", e.getMessage());
+        }
+    }
+
+    /** Test constructor with totalValue just above maximum and paymentMethod BANK_SLIP */
+    public void testConstructorTotalValueAboveMaximumBankSlip() {
+        double totalValue = 5000.01;
+        PaymentMethod method = PaymentMethod.BANK_SLIP;
+
+        try {
+            Payment payment = new Payment(totalValue, validDate, method);
+            fail("Expected IllegalArgumentException for total value above maximum with BANK_SLIP.");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Total value must be between R$0.01 and R$5000.0 if payment method is bank slip", e.getMessage());
+        }
+    }
+
+    /** Test constructor with totalValue at minimum and paymentMethod BANK_SLIP */
+    public void testConstructorTotalValueAtMinimumBankSlip() {
+        double totalValue = 0.01;
+        PaymentMethod method = PaymentMethod.BANK_SLIP;
+
+        Payment payment = new Payment(totalValue, validDate, method);
+
+        assertEquals(totalValue, payment.totalValue);
+        assertEquals(validDate, payment.date);
+        assertEquals(method, payment.paymentMethod);
+    }
+
+    /** Test constructor with totalValue at maximum and paymentMethod BANK_SLIP */
+    public void testConstructorTotalValueAtMaximumBankSlip() {
+        double totalValue = 5000.0;
+        PaymentMethod method = PaymentMethod.BANK_SLIP;
+
+        Payment payment = new Payment(totalValue, validDate, method);
+
+        assertEquals(totalValue, payment.totalValue);
+        assertEquals(validDate, payment.date);
+        assertEquals(method, payment.paymentMethod);
+    }
+
+    /** Test constructor with valid PaymentMethod but totalValue is invalid */
+    public void testConstructorInvalidTotalValueWithNonBankSlip() {
+        double totalValue = 0.005;
+        PaymentMethod method = PaymentMethod.CREDIT_CARD;
+
+        Payment payment = new Payment(totalValue, validDate, method);
+
+        assertEquals(totalValue, payment.totalValue);
+        assertEquals(validDate, payment.date);
+        assertEquals(method, payment.paymentMethod);
+    }
+
+    /** Test constructor with valid PaymentMethod and valid totalValue */
+    public void testConstructorValidTotalValueWithNonBankSlip() {
+        double totalValue = 100.0;
+        PaymentMethod method = PaymentMethod.CREDIT_CARD;
+
+        Payment payment = new Payment(totalValue, validDate, method);
+
+        assertEquals(totalValue, payment.totalValue);
+        assertEquals(validDate, payment.date);
+        assertEquals(method, payment.paymentMethod);
+    }
 }

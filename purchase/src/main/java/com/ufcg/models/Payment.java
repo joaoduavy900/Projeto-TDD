@@ -24,7 +24,11 @@ public class Payment
 
     public Payment(double totalValue, Date date, PaymentMethod paymentMethod)
     {
-        if (totalValue <= 0) {
+        if ((totalValue < 0.01 || totalValue > 5000) && paymentMethod == PaymentMethod.BANK_SLIP) {
+            throw new IllegalArgumentException("Total value must be between R$0.01 and R$5000.0 if payment method is bank slip");
+        }
+        if (totalValue <= 0)
+        {
             throw new IllegalArgumentException("Total value must be greater than zero.");
         }
 

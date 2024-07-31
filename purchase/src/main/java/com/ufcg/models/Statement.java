@@ -23,7 +23,7 @@ public class Statement
     String clientName;
 
     @Getter
-    @Setter(AccessLevel.PROTECTED)
+    @Setter
     StatementStatus status;
 
     public Statement(Date date, Double totalValue, String clientName, StatementStatus status)
