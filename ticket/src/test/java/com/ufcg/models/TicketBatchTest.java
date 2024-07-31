@@ -2,6 +2,12 @@ package com.ufcg.models;
 
 import com.ufcg.enums.TicketStatus;
 import com.ufcg.enums.TicketType;
+import com.ufcg.exceptions.DuplicateTicketException;
+import com.ufcg.exceptions.EmptyTicketListException;
+import com.ufcg.exceptions.HalfPriceTicketsOverLimitException;
+import com.ufcg.exceptions.HalfPriceTicketsUnderLimitException;
+import com.ufcg.exceptions.VipTicketsOverLimitException;
+import com.ufcg.exceptions.VipTicketsUnderLimitException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import junit.framework.Test;
@@ -55,7 +61,7 @@ public class TicketBatchTest extends TestCase {
     try {
       TicketBatch _ = new TicketBatch(id, empty, discount);
       fail();
-    } catch (IllegalArgumentException e) {
+    } catch (EmptyTicketListException e) {
     } catch (Exception e) {
       fail();
     }
@@ -72,7 +78,7 @@ public class TicketBatchTest extends TestCase {
     try {
       TicketBatch _ = new TicketBatch(id, tickets, discount);
       fail();
-    } catch (IllegalArgumentException e) {
+    } catch (VipTicketsOverLimitException e) {
     } catch (Exception e) {
       fail();
     }
@@ -90,7 +96,7 @@ public class TicketBatchTest extends TestCase {
     try {
       TicketBatch _ = new TicketBatch(id, tickets, discount);
       fail();
-    } catch (IllegalArgumentException e) {
+    } catch (VipTicketsUnderLimitException e) {
     } catch (Exception e) {
       fail();
     }
@@ -107,7 +113,7 @@ public class TicketBatchTest extends TestCase {
     try {
       TicketBatch _ = new TicketBatch(id, tickets, discount);
       fail();
-    } catch (IllegalArgumentException e) {
+    } catch (HalfPriceTicketsUnderLimitException e) {
     } catch (Exception e) {
       fail();
     }
@@ -124,7 +130,7 @@ public class TicketBatchTest extends TestCase {
     try {
       TicketBatch _ = new TicketBatch(id, tickets, discount);
       fail();
-    } catch (IllegalArgumentException e) {
+    } catch (HalfPriceTicketsOverLimitException e) {
     } catch (Exception e) {
       fail();
     }
@@ -141,7 +147,7 @@ public class TicketBatchTest extends TestCase {
     try {
       TicketBatch _ = new TicketBatch(id, tickets, discount);
       fail();
-    } catch (IllegalArgumentException e) {
+    } catch (DuplicateTicketException e) {
     } catch (Exception e) {
       fail();
     }

@@ -2,6 +2,14 @@ package com.ufcg.models;
 
 import com.ufcg.enums.TicketStatus;
 import com.ufcg.enums.TicketType;
+import com.ufcg.exceptions.DuplicateTicketException;
+import com.ufcg.exceptions.EmptyTicketListException;
+import com.ufcg.exceptions.HalfPriceTicketsOverLimitException;
+import com.ufcg.exceptions.HalfPriceTicketsUnderLimitException;
+import com.ufcg.exceptions.InvalidTicketBatchDiscountException;
+import com.ufcg.exceptions.InvalidTicketIdException;
+import com.ufcg.exceptions.VipTicketsOverLimitException;
+import com.ufcg.exceptions.VipTicketsUnderLimitException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.NoSuchElementException;
@@ -15,11 +23,11 @@ public class TicketBatch {
 
   public TicketBatch(int id, @NonNull ArrayList<Ticket> tickets, float discount) {
     if (id <= 0) {
-      throw new IllegalArgumentException("TicketBatch id must be positive.");
+      throw new InvalidTicketIdException("TicketBatch id must be positive.");
     }
 
     if (tickets.isEmpty()) {
-      throw new IllegalArgumentException("Tickets must not be empty in a TicketBatch.");
+      throw new EmptyTicketListException("Tickets must not be empty in a TicketBatch.");
     }
 
     int cntVip = 0, cntHalfPrice = 0, total = tickets.size();
@@ -30,22 +38,32 @@ public class TicketBatch {
       int freq = Collections.frequency(tickets, t);
 
       if (freq != 1) {
-        throw new IllegalArgumentException("Each ticket must be unique in a TicketBatch.");
+        throw new DuplicateTicketException("Each ticket must be unique in a TicketBatch.");
       }
     }
 
-    if (cntVip * 10 < total * 2 || cntVip * 10 > total * 3) {
-      throw new IllegalArgumentException(
+    if (cntVip * 10 < total * 2) {
+      throw new VipTicketsUnderLimitException(
           "VIP tickets must be between 20% and 30% of the total in a TicketBatch.");
     }
 
-    if (cntHalfPrice * 10 != total * 1) {
-      throw new IllegalArgumentException(
+    if (cntVip * 10 > total * 3) {
+      throw new VipTicketsOverLimitException(
+          "VIP tickets must be between 20% and 30% of the total in a TicketBatch.");
+    }
+
+    if (cntHalfPrice * 10 < total * 1) {
+      throw new HalfPriceTicketsUnderLimitException(
+          "Half-price tickets must be 10% of the total in a TicketBatch.");
+    }
+
+    if (cntHalfPrice * 10 > total * 1) {
+      throw new HalfPriceTicketsOverLimitException(
           "Half-price tickets must be 10% of the total in a TicketBatch.");
     }
 
     if (discount < 0) {
-      throw new IllegalArgumentException("TicketBatch discount must be non-negative.");
+      throw new InvalidTicketBatchDiscountException("TicketBatch discount must be non-negative.");
     }
 
     this.id = id;

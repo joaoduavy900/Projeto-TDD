@@ -2,6 +2,7 @@ package com.ufcg.models;
 
 import com.ufcg.enums.TicketStatus;
 import com.ufcg.enums.TicketType;
+import com.ufcg.exceptions.InvalidTicketIdException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -18,7 +19,7 @@ public class Ticket {
 
   public Ticket(int id, @NonNull TicketType type, @NonNull TicketStatus status) {
     if (id <= 0) {
-      throw new IllegalArgumentException("Ticket id must be positive.");
+      throw new InvalidTicketIdException("Ticket id must be positive.");
     }
     this.id = id;
     this.type = type;

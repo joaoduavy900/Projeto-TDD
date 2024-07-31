@@ -2,6 +2,7 @@ package com.ufcg.models;
 
 import com.ufcg.enums.TicketStatus;
 import com.ufcg.enums.TicketType;
+import com.ufcg.exceptions.InvalidTicketIdException;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -63,7 +64,7 @@ public class TicketTest extends TestCase {
     try {
       Ticket _ = new Ticket(id, type, status);
       fail();
-    } catch (IllegalArgumentException e) {
+    } catch (InvalidTicketIdException e) {
     } catch (Exception e) {
       fail();
     }
@@ -78,7 +79,7 @@ public class TicketTest extends TestCase {
     try {
       Ticket _ = new Ticket(id, type, status);
       fail();
-    } catch (IllegalArgumentException e) {
+    } catch (InvalidTicketIdException e) {
     } catch (Exception e) {
       fail();
     }
