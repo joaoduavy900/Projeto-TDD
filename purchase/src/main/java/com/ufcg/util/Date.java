@@ -60,6 +60,49 @@ public class Date {
         }
     }
 
+    public boolean isBefore(Date other) {
+        if (this.year < other.year) {
+            return true;
+        } else if (this.year == other.year) {
+            if (this.month < other.month) {
+                return true;
+            } else if (this.month == other.month) {
+                return this.day < other.day;
+            }
+        }
+        return false;
+    }
+
+    public boolean isAfter(Date other) {
+        if (this.year > other.year) {
+            return true;
+        } else if (this.year == other.year) {
+            if (this.month > other.month) {
+                return true;
+            } else if (this.month == other.month) {
+                return this.day > other.day;
+            }
+        }
+        return false;
+    }
+
+    public Date minusDays(int days) {
+        int newDay = this.day - days;
+        int newMonth = this.month;
+        int newYear = this.year;
+
+        while (newDay < 1) {
+            newMonth--;
+            if (newMonth < 1) {
+                newMonth = 12;
+                newYear--;
+            }
+            newDay += getDaysInMonth(newYear, newMonth);
+        }
+
+        return new Date(newYear, newMonth, newDay);
+    }
+
     @Override
     public boolean equals(Object o)
     {

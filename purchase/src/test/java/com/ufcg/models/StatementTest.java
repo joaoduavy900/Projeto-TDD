@@ -12,7 +12,7 @@ public class StatementTest extends TestCase
     private final Date validDate = new Date(2024, 7, 10);
     private final double validTotalValue = 1000.0;
     private final String validClientName = "Joao Matheus";
-    prvate final StatementStatus  validDefaultStatus = StatementStatus.UNDEFINED;
+    private final StatementStatus  validDefaultStatus = StatementStatus.UNDEFINED;
 
     public StatementTest(String testName)
     {
@@ -28,7 +28,7 @@ public class StatementTest extends TestCase
     public void testConstructorTotalValuePositiveValid()
     {
         double total = 100.0;
-        Statement statement = new Statement(validDate, total, validClientName);
+        Statement statement = new Statement(validDate, total, validClientName, validDefaultStatus);
 
         assertEquals(total, statement.totalValue);
         assertEquals(validDate, statement.getDate());
@@ -41,7 +41,7 @@ public class StatementTest extends TestCase
     {
         try {
             double total = 0.0;
-            Statement statement = new Statement(validDate, total, validClientName);
+            Statement statement = new Statement(validDate, total, validClientName, validDefaultStatus);
             fail("Expected IllegalArgumentException for zero totalValue.");
         } catch (IllegalArgumentException e) {
             // Expected exception, test passes
@@ -53,7 +53,7 @@ public class StatementTest extends TestCase
     {
         try {
             double total = -50.0;
-            Statement statement = new Statement(validDate, total, validClientName);
+            Statement statement = new Statement(validDate, total, validClientName, validDefaultStatus);
             fail("Expected IllegalArgumentException for negative totalValue.");
         } catch (IllegalArgumentException e) {
             // Expected exception, test passes
@@ -64,7 +64,7 @@ public class StatementTest extends TestCase
     public void testConstructorTotalValueVeryLarge()
     {
         double total = 1_000_000_000.0;
-        Statement statement = new Statement(validDate, total, validClientName);
+        Statement statement = new Statement(validDate, total, validClientName, validDefaultStatus);
 
         assertEquals(total, statement.totalValue);
         assertEquals(validDate, statement.getDate());
@@ -76,7 +76,7 @@ public class StatementTest extends TestCase
     public void testConstructorTotalValueVerySmallPositive()
     {
         double total = 0.01;
-        Statement statement = new Statement(validDate, total, validClientName);
+        Statement statement = new Statement(validDate, total, validClientName, validDefaultStatus);
 
         assertEquals(total, statement.totalValue);
         assertEquals(validDate, statement.date);
@@ -90,13 +90,13 @@ public class StatementTest extends TestCase
      * - Between 2 and 50 characters long.
      */
     public void testValidClientName() {
-        Statement statement = new Statement(validDate, 100.0, "John Doe");
+        Statement statement = new Statement(validDate, 100.0, "John Doe", validDefaultStatus);
         assertEquals("John Doe", statement.getClientName());
 
-        statement = new Statement(validDate, 200.0, "Alice");
+        statement = new Statement(validDate, 200.0, "Alice", validDefaultStatus);
         assertEquals("Alice", statement.getClientName());
 
-        statement = new Statement(validDate, 300.0, "Bob Smith");
+        statement = new Statement(validDate, 300.0, "Bob Smith", validDefaultStatus);
         assertEquals("Bob Smith", statement.getClientName());
     }
 
@@ -106,7 +106,7 @@ public class StatementTest extends TestCase
      */
     public void testClientNameWithNumbers() {
         try {
-            new Statement(validDate, 100.0, "John Doe 123");
+            new Statement(validDate, 100.0, "John Doe 123", validDefaultStatus);
             fail("Expected IllegalArgumentException for client name with numbers.");
         } catch (IllegalArgumentException e) {
             assertEquals("Invalid client name. It must be between 2 and 50 characters long and contain only letters and spaces.", e.getMessage());
@@ -119,7 +119,7 @@ public class StatementTest extends TestCase
      */
     public void testClientNameWithSpecialCharacters() {
         try {
-            new Statement(validDate, 100.0, "John@Doe!");
+            new Statement(validDate, 100.0, "John@Doe!", validDefaultStatus);
             fail("Expected IllegalArgumentException for client name with special characters.");
         } catch (IllegalArgumentException e) {
             assertEquals("Invalid client name. It must be between 2 and 50 characters long and contain only letters and spaces.", e.getMessage());
@@ -132,7 +132,7 @@ public class StatementTest extends TestCase
      */
     public void testClientNameTooShort() {
         try {
-            new Statement(validDate, 100.0, "J");
+            new Statement(validDate, 100.0, "J", validDefaultStatus);
             fail("Expected IllegalArgumentException for client name too short.");
         } catch (IllegalArgumentException e) {
             assertEquals("Invalid client name. It must be between 2 and 50 characters long and contain only letters and spaces.", e.getMessage());
@@ -145,7 +145,7 @@ public class StatementTest extends TestCase
      */
     public void testClientNameTooLong() {
         try {
-            new Statement(validDate, 100.0, "This name is way too long and should trigger an exception because it exceeds fifty characters.");
+            new Statement(validDate, 100.0, "This name is way too long and should trigger an exception because it exceeds fifty characters.", validDefaultStatus);
             fail("Expected IllegalArgumentException for client name too long.");
         } catch (IllegalArgumentException e) {
             assertEquals("Invalid client name. It must be between 2 and 50 characters long and contain only letters and spaces.", e.getMessage());
@@ -158,7 +158,7 @@ public class StatementTest extends TestCase
      */
     public void testClientNameWithNullValue() {
         try {
-            new Statement(validDate, 100.0, null);
+            new Statement(validDate, 100.0, null, validDefaultStatus);
             fail("Expected IllegalArgumentException for null client name.");
         } catch (IllegalArgumentException e) {
             assertEquals("Invalid client name. It must be between 2 and 50 characters long and contain only letters and spaces.", e.getMessage());

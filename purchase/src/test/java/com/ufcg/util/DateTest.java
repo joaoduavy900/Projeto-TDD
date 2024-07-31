@@ -1,11 +1,8 @@
 package com.ufcg.util;
 
-import com.ufcg.models.Bill;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import com.ufcg.util.Date;
 
 public class DateTest extends TestCase
 {

@@ -6,11 +6,13 @@ import junit.framework.TestSuite;
 
 public class BillProcessorTest extends TestCase
 {
-    public BillProcessorTest(String testName) {
+    public BillProcessorTest(String testName)
+    {
         super(testName);
     }
 
-    public static Test suite() {
+    public static Test suite()
+    {
         return new TestSuite(BillProcessorTest.class);
     }
 }

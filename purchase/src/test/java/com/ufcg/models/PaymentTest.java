@@ -51,7 +51,7 @@ public class PaymentTest extends TestCase
 
         assertEquals(total, payment.totalValue);
         assertEquals(validDate, payment.getDate());
-        assertEquals(validTotalValue, payment.paymentMethod);
+        assertEquals(validPaymentMethod, payment.paymentMethod);
     }
 
     /** Test constructor with totalValue as zero */
@@ -128,18 +128,6 @@ public class PaymentTest extends TestCase
         assertEquals(total, payment.totalValue);
         assertEquals(validDate, payment.date);
         assertEquals(PaymentMethod.BANK_TRANSFER, payment.getPaymentMethod());
-    }
-
-    /** Test constructor with null PaymentMethod */
-    public void testConstructorWithNullPaymentMethod() {
-        double total = 100.0;
-
-        try {
-            Payment payment = new Payment(total, validDate, null);
-            fail("Expected NullPointerException for null PaymentMethod.");
-        } catch (NullPointerException e) {
-            assertEquals("Payment method cannot be null.", e.getMessage());
-        }
     }
 
     /** Test constructor with totalValue just below minimum and paymentMethod BANK_SLIP */

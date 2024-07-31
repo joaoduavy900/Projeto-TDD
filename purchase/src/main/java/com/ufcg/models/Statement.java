@@ -31,7 +31,7 @@ public class Statement {
 
     private static final Pattern NAME_PATTERN = Pattern.compile("^[A-Za-z\\s]{2,50}$");
 
-    public Statement(Date date, Double totalValue, String clientName) {
+    public Statement(Date date, Double totalValue, String clientName, StatementStatus status) {
         if (totalValue <= 0) {
             throw new IllegalArgumentException("Total value must be greater than zero.");
         }
@@ -43,7 +43,8 @@ public class Statement {
         this.date = date;
         this.totalValue = totalValue;
         this.clientName = clientName;
-        this.status = StatementStatus.UNDEFINED;
+
+        this.status = (status != null) ? status : StatementStatus.UNDEFINED;
     }
 
     private boolean isValidClientName(String clientName) {
