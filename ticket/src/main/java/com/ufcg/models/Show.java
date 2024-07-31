@@ -1,5 +1,6 @@
 package com.ufcg.models;
 
+import com.ufcg.exceptions.DuplicateTicketBatchException;
 import com.ufcg.exceptions.DuplicateTicketException;
 import com.ufcg.exceptions.EmptyShowArtistException;
 import com.ufcg.exceptions.EmptyTicketBatchListException;
@@ -48,10 +49,19 @@ public class Show {
     }
 
     for (int i = 0; i < batches.size(); i++) {
+      for (int j = i + 1; j < batches.size(); j++) {
+        if (batches.get(i).equals(batches.get(j))) {
+          throw new DuplicateTicketBatchException(
+              "Show cannot have two ticket batches with the same id.");
+        }
+      }
+    }
+
+    for (int i = 0; i < batches.size(); i++) {
       for (Ticket t : batches.get(i).getTickets().values()) {
         for (int j = i + 1; j < batches.size(); j++) {
           if (batches.get(j).contains(t)) {
-            throw new DuplicateTicketException("I show cannot have two tickets with the same id.");
+            throw new DuplicateTicketException("Show cannot have two tickets with the same id.");
           }
         }
       }

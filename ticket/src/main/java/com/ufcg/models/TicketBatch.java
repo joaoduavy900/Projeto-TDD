@@ -96,4 +96,15 @@ public class TicketBatch {
   public boolean contains(Ticket t) {
     return tickets.containsKey(t.getId());
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == null) return false;
+
+    if (o.getClass() != TicketBatch.class) return false;
+
+    TicketBatch batch = (TicketBatch) o;
+
+    return batch.getId() == id;
+  }
 }

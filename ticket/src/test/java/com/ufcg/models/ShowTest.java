@@ -2,6 +2,7 @@ package com.ufcg.models;
 
 import com.ufcg.enums.TicketStatus;
 import com.ufcg.enums.TicketType;
+import com.ufcg.exceptions.DuplicateTicketBatchException;
 import com.ufcg.exceptions.DuplicateTicketException;
 import com.ufcg.exceptions.EmptyShowArtistException;
 import com.ufcg.exceptions.EmptyTicketBatchListException;
@@ -16,6 +17,7 @@ import junit.framework.TestSuite;
 
 public class ShowTest extends TestCase {
   private ArrayList<TicketBatch> batches;
+  HashMap<Integer, Ticket> tickets;
   private TicketBatch batch;
 
   public ShowTest(String testName) {
@@ -197,8 +199,22 @@ public class ShowTest extends TestCase {
     double fee = 10.0;
     double cost = 100.0;
     ArrayList<TicketBatch> batches = this.batches;
-    batches.add(batch);
     boolean specialDate = false;
+
+    HashMap<Integer, Ticket> tickets = new HashMap<Integer, Ticket>();
+
+    tickets.put(1, new Ticket(1, TicketType.VIP, TicketStatus.AVAILABLE));
+    tickets.put(12, new Ticket(12, TicketType.VIP, TicketStatus.AVAILABLE));
+    tickets.put(13, new Ticket(13, TicketType.VIP, TicketStatus.AVAILABLE));
+    tickets.put(14, new Ticket(14, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(15, new Ticket(15, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(16, new Ticket(16, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(17, new Ticket(17, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(18, new Ticket(18, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(19, new Ticket(19, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(110, new Ticket(110, TicketType.HALF_PRICE, TicketStatus.AVAILABLE));
+
+    batches.add(new TicketBatch(2, tickets, 20));
 
     try {
       Show _ = new Show(date, artist, fee, cost, batches, specialDate);
@@ -207,6 +223,68 @@ public class ShowTest extends TestCase {
     } catch (Exception e) {
       fail();
     }
+  }
+
+  /** Test constructor duplicated tickets batches */
+  public void testConstructorDuplicatedTicketBatches() {
+    Date date = new Date();
+    String artist = "Fermat";
+    double fee = 10.0;
+    double cost = 100.0;
+    ArrayList<TicketBatch> batches = this.batches;
+    boolean specialDate = false;
+
+    HashMap<Integer, Ticket> tickets = new HashMap<Integer, Ticket>();
+
+    tickets.put(11, new Ticket(11, TicketType.VIP, TicketStatus.AVAILABLE));
+    tickets.put(12, new Ticket(12, TicketType.VIP, TicketStatus.AVAILABLE));
+    tickets.put(13, new Ticket(13, TicketType.VIP, TicketStatus.AVAILABLE));
+    tickets.put(14, new Ticket(14, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(15, new Ticket(15, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(16, new Ticket(16, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(17, new Ticket(17, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(18, new Ticket(18, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(19, new Ticket(19, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(110, new Ticket(110, TicketType.HALF_PRICE, TicketStatus.AVAILABLE));
+
+    batches.add(new TicketBatch(1, tickets, 20));
+
+    try {
+      Show _ = new Show(date, artist, fee, cost, batches, specialDate);
+      fail();
+    } catch (DuplicateTicketBatchException e) {
+    } catch (Exception e) {
+      fail();
+    }
+  }
+
+  /** Test constructor more than one ticket batch */
+  public void testConstructorMoreThanOneTicketBatches() {
+    Date date = new Date();
+    String artist = "Fermat";
+    double fee = 10.0;
+    double cost = 100.0;
+    ArrayList<TicketBatch> batches = this.batches;
+    boolean specialDate = false;
+
+    HashMap<Integer, Ticket> tickets = new HashMap<Integer, Ticket>();
+
+    tickets.put(11, new Ticket(11, TicketType.VIP, TicketStatus.AVAILABLE));
+    tickets.put(12, new Ticket(12, TicketType.VIP, TicketStatus.AVAILABLE));
+    tickets.put(13, new Ticket(13, TicketType.VIP, TicketStatus.AVAILABLE));
+    tickets.put(14, new Ticket(14, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(15, new Ticket(15, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(16, new Ticket(16, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(17, new Ticket(17, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(18, new Ticket(18, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(19, new Ticket(19, TicketType.NORMAL, TicketStatus.AVAILABLE));
+    tickets.put(110, new Ticket(110, TicketType.HALF_PRICE, TicketStatus.AVAILABLE));
+
+    batches.add(new TicketBatch(2, tickets, 20));
+
+    Show show = new Show(date, artist, fee, cost, batches, specialDate);
+
+    assertEquals(show.getBatches(), batches);
   }
 
   /** Test get report */

@@ -368,4 +368,61 @@ public class TicketBatchTest extends TestCase {
     soldTickets.put(ticket.getId(), ticket);
     assertEquals(batch.getSoldTickets(), soldTickets);
   }
+
+  /** Test equals */
+  public void testEquals() {
+    int id = 1;
+    int discount = 10;
+    HashMap<Integer, Ticket> tickets = this.tickets;
+
+    TicketBatch a = new TicketBatch(id, tickets, discount);
+    TicketBatch b = new TicketBatch(id, tickets, discount);
+
+    assertEquals(a, b);
+  }
+
+  /** Test not equals */
+  public void testNotEquals() {
+    int id = 1;
+    int discount = 10;
+    HashMap<Integer, Ticket> tickets = this.tickets;
+
+    TicketBatch a = new TicketBatch(id, tickets, discount);
+    TicketBatch b = new TicketBatch(id + 1, tickets, discount);
+
+    assertFalse(a.equals(b));
+  }
+
+  /** Test equals null */
+  public void testEqualsNull() {
+    int id = 1;
+    int discount = 10;
+    HashMap<Integer, Ticket> tickets = this.tickets;
+
+    TicketBatch a = new TicketBatch(id, tickets, discount);
+
+    assertFalse(a.equals(null));
+  }
+
+  /** Test contains */
+  public void testContains() {
+    int id = 1;
+    int discount = 10;
+    HashMap<Integer, Ticket> tickets = this.tickets;
+
+    TicketBatch a = new TicketBatch(id, tickets, discount);
+    Ticket ticket = new Ticket(1, TicketType.VIP, TicketStatus.AVAILABLE);
+    assertTrue(a.contains(ticket));
+  }
+
+  /** Test not contains */
+  public void testNotContains() {
+    int id = 1;
+    int discount = 10;
+    HashMap<Integer, Ticket> tickets = this.tickets;
+
+    TicketBatch a = new TicketBatch(id, tickets, discount);
+    Ticket ticket = new Ticket(20, TicketType.VIP, TicketStatus.AVAILABLE);
+    assertFalse(a.contains(ticket));
+  }
 }
