@@ -1,11 +1,13 @@
 package com.ufcg.models;
 
+import com.ufcg.enums.TicketType;
 import com.ufcg.exceptions.DuplicateTicketBatchException;
 import com.ufcg.exceptions.DuplicateTicketException;
 import com.ufcg.exceptions.EmptyShowArtistException;
 import com.ufcg.exceptions.EmptyTicketBatchListException;
 import com.ufcg.exceptions.InvalidShowCostException;
 import com.ufcg.exceptions.InvalidShowFeeException;
+import com.ufcg.exceptions.InvalidShowTicketPriceException;
 import java.util.ArrayList;
 import java.util.Date;
 import lombok.Getter;
@@ -24,13 +26,16 @@ public class Show {
 
   @Getter private boolean specialDate;
 
+  @Getter private double ticketPrice;
+
   public Show(
       @NonNull Date date,
       @NonNull String artist,
       double fee,
       double cost,
       @NonNull ArrayList<TicketBatch> batches,
-      boolean specialDate) {
+      boolean specialDate,
+      double ticketPrice) {
 
     if (artist == "") {
       throw new EmptyShowArtistException("Show artist cannot be empty.");
@@ -67,11 +72,36 @@ public class Show {
       }
     }
 
+    if (ticketPrice <= 0) {
+      throw new InvalidShowTicketPriceException("Show ticket price must be positive.");
+    }
+
     this.date = date;
     this.artist = artist;
     this.fee = fee;
     this.cost = cost;
     this.batches = batches;
     this.specialDate = specialDate;
+    this.ticketPrice = ticketPrice;
+  }
+
+  public Report getReport() {
+    int vipTickets = 0, normalTickets = 0, halfPriceTickets = 0;
+    double netRevenue = -(fee + cost) * (specialDate ? 1.15 : 1);
+    for (TicketBatch batch : batches) {
+      for (Ticket t : batch.getSoldTickets().values()) {
+        if (t.getType() == TicketType.VIP) {
+          vipTickets++;
+          netRevenue += 2 * ticketPrice * (1 - batch.getDiscount());
+        } else if (t.getType() == TicketType.NORMAL) {
+          normalTickets++;
+          netRevenue += ticketPrice * (1 - batch.getDiscount());
+        } else if (t.getType() == TicketType.HALF_PRICE) {
+          halfPriceTickets++;
+          netRevenue += 0.5 * ticketPrice * (1 - batch.getDiscount());
+        }
+      }
+    }
+    return new Report(vipTickets, normalTickets, halfPriceTickets, netRevenue);
   }
 }

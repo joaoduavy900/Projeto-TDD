@@ -18,9 +18,9 @@ import lombok.NonNull;
 public class TicketBatch {
   @Getter private int id;
   @Getter private HashMap<Integer, Ticket> tickets;
-  @Getter private float discount;
+  @Getter private double discount;
 
-  public TicketBatch(int id, @NonNull HashMap<Integer, Ticket> tickets, float discount) {
+  public TicketBatch(int id, @NonNull HashMap<Integer, Ticket> tickets, double discount) {
     if (id <= 0) {
       throw new InvalidTicketIdException("TicketBatch id must be positive.");
     }
@@ -59,8 +59,9 @@ public class TicketBatch {
       throw new DiscountUnderLimitException("TicketBatch discount must be non-negative.");
     }
 
-    if (discount > 25) {
-      throw new DiscountOverLimitException("TicketBatch discount must be non-negative.");
+    if (discount > 0.25) {
+      throw new DiscountOverLimitException(
+          "TicketBatch discount must be less than or igual to 25%");
     }
 
     this.id = id;

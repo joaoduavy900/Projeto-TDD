@@ -44,7 +44,7 @@ public class TicketBatchTest extends TestCase {
   /** Test constructor */
   public void testConstructor() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch batch = new TicketBatch(id, tickets, discount);
@@ -57,7 +57,7 @@ public class TicketBatchTest extends TestCase {
   /** Test constructor negative id */
   public void testConstructorNegativeId() {
     int id = -1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     try {
@@ -73,7 +73,7 @@ public class TicketBatchTest extends TestCase {
   /** Test constructor zero id */
   public void testConstructorZeroId() {
     int id = 0;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     try {
@@ -89,7 +89,7 @@ public class TicketBatchTest extends TestCase {
   /** Test constructor discount under limit */
   public void testConstructorDiscountUnderLimit() {
     int id = 1;
-    int discount = -1;
+    double discount = -0.01;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     try {
@@ -105,7 +105,7 @@ public class TicketBatchTest extends TestCase {
   /** Test constructor discount over limit */
   public void testConstructorDiscountOverLimit() {
     int id = 1;
-    int discount = 26;
+    double discount = 0.26;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     try {
@@ -121,7 +121,7 @@ public class TicketBatchTest extends TestCase {
   /** Test constructor null tickets */
   public void testConstructorNullTickets() {
     int id = 1;
-    int discount = 20;
+    double discount = 0.20;
     HashMap<Integer, Ticket> tickets = null;
 
     try {
@@ -137,7 +137,7 @@ public class TicketBatchTest extends TestCase {
   /** Test constructor empty tickets */
   public void testConstructorEmptyTickets() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> empty = new HashMap<Integer, Ticket>();
 
     try {
@@ -152,7 +152,7 @@ public class TicketBatchTest extends TestCase {
   /** Test constructor vip tickets over limit */
   public void testConstructorVipTicketsOverLimit() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     tickets.put(4, new Ticket(4, TicketType.VIP, TicketStatus.AVAILABLE));
@@ -169,7 +169,7 @@ public class TicketBatchTest extends TestCase {
   /** Test constructor vip tickets under limit */
   public void testConstructorVipTicketsUnderLimit() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     tickets.put(3, new Ticket(3, TicketType.NORMAL, TicketStatus.AVAILABLE));
@@ -187,7 +187,7 @@ public class TicketBatchTest extends TestCase {
   /** Test constructor half-price tickets under limit */
   public void testConstructorHalfPriceTicketsUnderLimit() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     tickets.put(10, new Ticket(10, TicketType.NORMAL, TicketStatus.AVAILABLE));
@@ -204,7 +204,7 @@ public class TicketBatchTest extends TestCase {
   /** Test constructor half-price tickets over limit */
   public void testConstructorHalfPriceTicketsOverLimit() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     tickets.put(9, new Ticket(9, TicketType.HALF_PRICE, TicketStatus.AVAILABLE));
@@ -221,7 +221,7 @@ public class TicketBatchTest extends TestCase {
   /** Test buy vip ticket */
   public void testButVipTicket() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch batch = new TicketBatch(id, tickets, discount);
@@ -239,7 +239,7 @@ public class TicketBatchTest extends TestCase {
   /** Test buy unavailable vip ticket */
   public void testButUnavailableVipTicket() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch batch = new TicketBatch(id, tickets, discount);
@@ -263,7 +263,7 @@ public class TicketBatchTest extends TestCase {
   /** Test buy normal ticket */
   public void testBuyNormalTicket() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch batch = new TicketBatch(id, tickets, discount);
@@ -281,7 +281,7 @@ public class TicketBatchTest extends TestCase {
   /** Test buy unavailable normal ticket */
   public void testBuyUnavailableNormalTicket() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch batch = new TicketBatch(id, tickets, discount);
@@ -305,7 +305,7 @@ public class TicketBatchTest extends TestCase {
   /** Test buy half-price ticket */
   public void testBuyHalfPriceTicket() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch batch = new TicketBatch(id, tickets, discount);
@@ -323,7 +323,7 @@ public class TicketBatchTest extends TestCase {
   /** Test buy unavailable half-price ticket */
   public void testBuyUnavailableHalfPriceTicket() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch batch = new TicketBatch(id, tickets, discount);
@@ -347,7 +347,7 @@ public class TicketBatchTest extends TestCase {
   /** Test get sold tickets */
   public void testGetSoldTickets() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch batch = new TicketBatch(id, tickets, discount);
@@ -372,7 +372,7 @@ public class TicketBatchTest extends TestCase {
   /** Test equals */
   public void testEquals() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch a = new TicketBatch(id, tickets, discount);
@@ -384,7 +384,7 @@ public class TicketBatchTest extends TestCase {
   /** Test not equals */
   public void testNotEquals() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch a = new TicketBatch(id, tickets, discount);
@@ -396,7 +396,7 @@ public class TicketBatchTest extends TestCase {
   /** Test equals null */
   public void testEqualsNull() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch a = new TicketBatch(id, tickets, discount);
@@ -407,7 +407,7 @@ public class TicketBatchTest extends TestCase {
   /** Test contains */
   public void testContains() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch a = new TicketBatch(id, tickets, discount);
@@ -418,7 +418,7 @@ public class TicketBatchTest extends TestCase {
   /** Test not contains */
   public void testNotContains() {
     int id = 1;
-    int discount = 10;
+    double discount = 0.10;
     HashMap<Integer, Ticket> tickets = this.tickets;
 
     TicketBatch a = new TicketBatch(id, tickets, discount);
