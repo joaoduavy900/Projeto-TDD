@@ -10,12 +10,11 @@ import com.ufcg.util.Date;
 
 public class BillProcessor {
 
-    public static Statement processBill(Bill bill, List<Bill> bills, String clientName) {
+    public static Statement processBill(Bill bill, List<Bill> bills, String clientName, PaymentMethod paymentMethod) {
         double totalPayments = 0.0;
 
         for (Bill b : bills) {
-            PaymentMethod method = determinePaymentMethod(b);
-            Payment payment = new Payment(b.getTotalValue(), b.getDate(), method);
+            Payment payment = new Payment(b.getTotalValue(), b.getDate(), paymentMethod);
 
             if (!isPaymentDateValid(payment, bill.getDate())) {
                 continue;
@@ -27,14 +26,6 @@ public class BillProcessor {
         StatementStatus status = totalPayments >= bill.getTotalValue() ? StatementStatus.PAID : StatementStatus.PENDING;
 
         return new Statement(bill.getDate(), bill.getTotalValue(), clientName, status);
-    }
-
-    private static PaymentMethod determinePaymentMethod(Bill bill) {
-        if (bill.getTotalValue() > 1000) {
-            return PaymentMethod.BANK_TRANSFER;
-        } else {
-            return PaymentMethod.BANK_SLIP;
-        }
     }
 
     private static boolean isPaymentDateValid(Payment payment, Date billDate) {
