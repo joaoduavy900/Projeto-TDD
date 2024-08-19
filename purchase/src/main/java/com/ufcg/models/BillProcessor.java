@@ -1,4 +1,4 @@
-package com.ufcg;
+package com.ufcg.models;
 
 import java.util.List;
 import com.ufcg.models.Bill;
