@@ -33,10 +33,7 @@ public class VipTicketProportionTest extends TestCase {
       tickets.put(nxt++, new Ticket(1, TicketType.HALF_PRICE, TicketStatus.AVAILABLE));
     }
 
-    int id = 1;
-    double discount = 0.10;
-
-    new TicketBatch(id, tickets, discount);
+    new TicketBatch(1, tickets, 0.10);
   }
 
   public void testAVL2() {
