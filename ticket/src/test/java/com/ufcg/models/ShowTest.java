@@ -80,7 +80,7 @@ public class ShowTest extends TestCase {
     double ticketPrice = 1;
 
     try {
-      Show _ = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
+      Show show = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
       fail();
     } catch (NullPointerException e) {
     } catch (Exception e) {
@@ -99,7 +99,7 @@ public class ShowTest extends TestCase {
     double ticketPrice = 1;
 
     try {
-      Show _ = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
+      Show show = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
       fail();
     } catch (EmptyShowArtistException e) {
     } catch (Exception e) {
@@ -118,7 +118,7 @@ public class ShowTest extends TestCase {
     double ticketPrice = 1;
 
     try {
-      Show _ = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
+      Show show = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
       fail();
     } catch (NullPointerException e) {
     } catch (Exception e) {
@@ -137,7 +137,7 @@ public class ShowTest extends TestCase {
     double ticketPrice = 1;
 
     try {
-      Show _ = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
+      Show show = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
       fail();
     } catch (InvalidShowFeeException e) {
     } catch (Exception e) {
@@ -156,7 +156,7 @@ public class ShowTest extends TestCase {
     double ticketPrice = 1;
 
     try {
-      Show _ = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
+      Show show = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
       fail();
     } catch (InvalidShowCostException e) {
     } catch (Exception e) {
@@ -175,7 +175,7 @@ public class ShowTest extends TestCase {
     double ticketPrice = 1;
 
     try {
-      Show _ = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
+      Show show = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
       fail();
     } catch (EmptyTicketBatchListException e) {
     } catch (Exception e) {
@@ -194,7 +194,7 @@ public class ShowTest extends TestCase {
     double ticketPrice = 1;
 
     try {
-      Show _ = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
+      Show show = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
       fail();
     } catch (NullPointerException e) {
     } catch (Exception e) {
@@ -228,7 +228,7 @@ public class ShowTest extends TestCase {
     batches.add(new TicketBatch(2, tickets, 0.20));
 
     try {
-      Show _ = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
+      Show show = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
       fail();
     } catch (DuplicateTicketException e) {
     } catch (Exception e) {
@@ -262,7 +262,7 @@ public class ShowTest extends TestCase {
     batches.add(new TicketBatch(1, tickets, 0.20));
 
     try {
-      Show _ = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
+      Show show = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
       fail();
     } catch (DuplicateTicketBatchException e) {
     } catch (Exception e) {
@@ -317,7 +317,7 @@ public class ShowTest extends TestCase {
     double ticketPrice = -1;
 
     try {
-      Show _ = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
+      Show show = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
       fail();
     } catch (InvalidShowTicketPriceException e) {
     } catch (Exception e) {
@@ -336,7 +336,7 @@ public class ShowTest extends TestCase {
     double ticketPrice = 0;
 
     try {
-      Show _ = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
+      Show show = new Show(date, artist, fee, cost, batches, specialDate, ticketPrice);
       fail();
     } catch (InvalidShowTicketPriceException e) {
     } catch (Exception e) {

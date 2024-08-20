@@ -2,16 +2,19 @@ package com.ufcg.models;
 
 import com.ufcg.enums.ShowStatus;
 import com.ufcg.exceptions.InvalidReportTicketsException;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 public class ReportTest extends TestCase {
 
-  public ReportTest(String testName) {}
+  public ReportTest(String testName) {
+    super(testName);
+  }
 
   public static Test suite() {
-    return new TestSuite(ShowTest.class);
+    return new TestSuite(ReportTest.class);
   }
 
   /** Test constructor loss */
@@ -62,7 +65,7 @@ public class ReportTest extends TestCase {
     double netRevenue = 1.25;
 
     try {
-      Report _ = new Report(vipTickets, normalTickets, halfPriceTickets, netRevenue);
+      Report report = new Report(vipTickets, normalTickets, halfPriceTickets, netRevenue);
       fail();
     } catch (InvalidReportTicketsException e) {
     } catch (Exception e) {
@@ -76,7 +79,7 @@ public class ReportTest extends TestCase {
     double netRevenue = 1.25;
 
     try {
-      Report _ = new Report(vipTickets, normalTickets, halfPriceTickets, netRevenue);
+      Report report = new Report(vipTickets, normalTickets, halfPriceTickets, netRevenue);
       fail();
     } catch (InvalidReportTicketsException e) {
     } catch (Exception e) {
@@ -90,7 +93,7 @@ public class ReportTest extends TestCase {
     double netRevenue = 3.1415926;
 
     try {
-      Report _ = new Report(vipTickets, normalTickets, halfPriceTickets, netRevenue);
+      Report report = new Report(vipTickets, normalTickets, halfPriceTickets, netRevenue);
       fail();
     } catch (InvalidReportTicketsException e) {
     } catch (Exception e) {
